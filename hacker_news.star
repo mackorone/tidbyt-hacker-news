@@ -18,11 +18,14 @@ def main():
     top_30 = http.get(TOP_STORIES_URL).json()[:30]
 
     if MODE == 0:
-        story = get_story(top_30[0])
+        index = 0
+        story = get_story(top_30[index])
     elif MODE == 1:
         story = get_story_by(top_30, "score")
+        index = top_30.index(story["id"])
     elif MODE == 2:
         story = get_story_by(top_30, "descendants")
+        index = top_30.index(story["id"])
     else:
         index = int(random() * len(top_30))
         story = get_story(top_30[index])
@@ -45,7 +48,10 @@ def main():
             children=[
                 render.Column(
                     children=[
-                        render.Marquee(render.Text(title), width=64),
+                        render.Marquee(
+                            render.Text("{}. {}".format(index + 1, title)),
+                            width=64,
+                        ),
                         render.Text("@" + author),
                         render.Text("{}p {}c".format(num_points, num_comments)),
                         render.Text(pretty_age),
