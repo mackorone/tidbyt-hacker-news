@@ -30,18 +30,18 @@ def main():
         index = int(random() * len(top_30))
         story = get_story(top_30[index])
 
-    age = time.now() - time.fromtimestamp(int(story["time"]))
-    if age.hours() != 0:
-        pretty_age = "{} hrs ago".format(int(age.hours()))
+    age = time.now() - time.from_timestamp(int(story["time"]))
+    if age.hours != 0:
+        pretty_age = "{} hr ago".format(int(age.hours))
     elif age.minutes() != 0:
-        pretty_age = "{} mins ago".format(int(age.minutes()))
+        pretty_age = "{} min ago".format(int(age.minutes))
     else:
         pretty_age = "just now"
 
     title = story["title"]
     author = story["by"]
-    num_points = story["score"]
-    num_comments = story["descendants"]
+    num_points = int(story["score"])
+    num_comments = int(story["descendants"])
 
     return render.Root(
         child=render.Stack(
@@ -96,4 +96,4 @@ def get_story(id_):
 
 def random():
     """Return a pseudorandom number in [0, 1)"""
-    return time.now().nanosecond() / 1000000000
+    return time.now().nanosecond / 1000000000
